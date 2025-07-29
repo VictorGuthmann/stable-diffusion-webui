@@ -1,26 +1,10 @@
 #!/usr/bin/env bash
 
-# Comando fixado para evitar erro ao executar como root no Render
-can_run_as_root=1
+set -e
 
-# Funções internas (sem mudanças)
-function is_wsl() {
-    grep -qi Microsoft /proc/version &> /dev/null
-}
-
-function prepare_tcmalloc() {
-    return
-}
-
-# Detecta o interpretador Python
-python_cmd="python3"
-LAUNCH_SCRIPT="launch.py"
-
-printf "Launching launch.py..."
-
-# ⚠️ ADIÇÃO para evitar erro com tokenizers e pillow-avif-plugin
+echo "▶️ Instalando dependências (com --no-build-isolation)..."
 pip install --upgrade pip
 pip install --no-build-isolation -r requirements.txt
 
-# Executa o script principal
-"${python_cmd}" -u "${LAUNCH_SCRIPT}" "$@"
+echo "▶️ Iniciando Stable Diffusion WebUI no Render..."
+python3 launch.py --listen --port "$PORT" --skip-torch-cuda-test --xformers
