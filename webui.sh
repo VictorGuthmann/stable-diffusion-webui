@@ -5,14 +5,10 @@ echo "🔧 Corrigindo ambiente para Render..."
 
 pip install --upgrade pip setuptools wheel
 
-# Instala dependências problemáticas por wheels pré-compilados
-pip install \
-    tokenizers==0.13.3 \
-    pillow-avif-plugin==1.4.3 \
-    --prefer-binary \
-    --no-build-isolation
+# Evita compilação do tokenizers (usa wheel oficial)
+pip install tokenizers==0.13.3 --prefer-binary --no-build-isolation
 
-# Instala o restante
+# Agora instala o resto
 pip install -r requirements.txt --prefer-binary --no-build-isolation
 
 echo "✅ Tudo instalado, iniciando WebUI..."
