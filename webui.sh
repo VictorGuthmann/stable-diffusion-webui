@@ -3,20 +3,18 @@ set -e
 
 echo "▶️ Instalando dependências pré-compiladas..."
 
-# Atualiza o pip e ferramentas essenciais
+# Atualiza ferramentas de build
 pip install --upgrade pip setuptools wheel
 
-# Instala manualmente os pacotes problemáticos
+# Instala os pacotes problemáticos diretamente
 pip install \
   tokenizers==0.13.3 \
   pillow-avif-plugin==1.4.3 \
   --prefer-binary \
   --no-build-isolation
 
-# Instala todas as outras dependências
+# Instala o restante normalmente
 pip install -r requirements.txt --prefer-binary --no-build-isolation
 
-echo "✅ Tudo instalado, iniciando WebUI..."
-
-# Inicia o Stable Diffusion Web UI
+echo "✅ Tudo pronto, iniciando WebUI..."
 python3 launch.py --listen --port "$PORT" --skip-torch-cuda-test --xformers
